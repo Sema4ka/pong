@@ -32,14 +32,20 @@ int main() {
     int fScore = 0;  // score peram
     int sScore = 0;
     int winScore = 21;
+
+    char input;
     while (flag) {
-        ball_x = ballMoveX(ball_velGor, ball_x);  // skorost' mya4a
-        ball_y = ballMoveY(ball_velVer, ball_y);
+        ball_x += ball_velGor;  // skorost' mya4a
+        ball_y += ball_velVer;
 
         tmp = checkBallRocket(ball_x, ball_y, rocket1_x, rocket1_y, rocket2_x,
                               rocket2_y);  // proverka na rocket
         ball_velVer *= tmp;
         ball_velGor *= tmp;
+        
+        printf("%d", ball_y);
+        if(ball_y == 25 || ball_y == 1)
+            ball_velVer *=-1;
 
         update(ball_x, ball_y, rocket1_y, rocket2_y);  // otrisovka kadra
 
@@ -61,18 +67,30 @@ int main() {
             }
             flag = 0;
         }
+        
+        input = getchar();
+
+        if(input == 'q')
+            flag = 0;
+        else if(input==' ')
+            continue;
+        else if(input=='a' || input=='A')
+            rocket1_y--;
+        else if(input=='z' || input=='Z')
+            rocket1_y++;
+        else if(input=='k' || input=='K')
+            rocket2_y--;
+        else if(input=='m' || input=='M')
+            rocket1_y++;
     }
 }
-
-int ballMoveX(int velG, int x) { return (velG + x); };
-
-int ballMoveY(int velV, int y) { return (velV + y); };
 
 int checkBallRocket(int x, int y, int r1x, int r1y, int r2x, int r2y) {
     int checkR1 = (x == r1x && (y == r1y || y == r1y - 1 || y == r1y - 2));
     int checkR2 = (x == r2x && (y == r2y || y == r2y - 1 || y == r2y - 2));
+    
 
-    if (checkR1 == 0 || checkR2 == 0)
+    if (checkR1 == 1 || checkR2 == 1)
         return -1;
 
     else
