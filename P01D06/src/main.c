@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+int fScore = 0;
+int sScore = 0;
+int winScore = 21;
+
 void logic();
 void update();
 void horizonDraw();
@@ -20,7 +24,29 @@ int main() {
     while (flag) {
         logic();
         update();
+    
+
+        if (ball_x == 79) {
+            if (fScore < winScore) {
+                fScore++;
+            } else {
+                printf("Congratulations! LEFT player WIN!");
+                break;
+            }
+            flag = 0;
+        }
+        if (ball_x == 1) {
+            if (sScore < winScore) {
+                sScore++;
+            } else {
+                printf("Congratulations! RIGHT player WIN!");
+                break;
+            }
+            flag = 0;
+        }
     }
+
+
 }
 
 void update() {
@@ -45,3 +71,4 @@ void vierticalDraw() {
         printf("%c", viewVer);
         printf("\n");
     }
+}
