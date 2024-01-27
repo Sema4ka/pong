@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 //void logic();
-void update();
+void update(int, int, int, int);
 void horizonDraw();
-void vierticalDraw();
-int racketDraw(int, int);
-int ballDraw(int, int);
+void vierticalDraw(int, int, int, int);
+int racketDraw(int, int, int, int);
+int ballDraw(int, int, int, int);
 
 int main() {
     int flag = 1;
@@ -17,17 +17,17 @@ int main() {
 
     int rocket1_y = 10;
     int rocket2_y = 10;
-    int rocket1_x = 20;
-    int rocket2_x = 60;
+    int rocket1_x = 1;
+    int rocket2_x = 77;
     //while (flag) {
         //logic();
-        update();
+        update(ball_x, ball_y, rocket1_y, rocket2_y);
     //}
 }
 
-void update() {
+void update(int ball_x, int ball_y, int rocket1_y, int rocket2_y) {
     horizonDraw();
-    vierticalDraw();
+    vierticalDraw(ball_x, ball_y, rocket1_y, rocket2_y);
     horizonDraw();
 }
 
@@ -39,7 +39,8 @@ void horizonDraw() {
     printf("\n");
 }
 
-void vierticalDraw() {
+void vierticalDraw(int ball_x, int ball_y, int rocket1_y, int rocket2_y) {
+    int flag = 1;
     char viewVer = '|';
     int ballDrawFlag = 0;
     
@@ -47,11 +48,13 @@ void vierticalDraw() {
         printf("%c", viewVer);
         for (int j = 0; j < 80 - 1; ++j)
         {
-            if( ! racketDraw(i, j))
-                printf(".");
             
-            if( ! ballDraw(i, j))
-                printf("#");
+            if (ballDraw(i, j, ball_x, ball_y))
+                continue;
+
+            if( ! racketDraw(i, j, rocket1_y, rocket2_y))
+                printf(" ");
+            
           
         }
         printf("%c", viewVer);
@@ -60,9 +63,9 @@ void vierticalDraw() {
 
 }
 
-int racketDraw(int row, int column){
+int racketDraw(int row, int column, int y1, int y2){
     int flag = 0;
-    int firstCoordinate = 11;
+    int firstCoordinate = y1;
     int leftOrRight = 0;
     
     if(column > 40)
@@ -71,34 +74,58 @@ int racketDraw(int row, int column){
         leftOrRight = 1;
         
     
-    if((row == firstCoordinate && column == leftOrRight))
+    if((row == firstCoordinate && column == 1))
     {
         printf("|");
         flag = 1;
     }
-    if((row == firstCoordinate + 1 && column == leftOrRight))
+    if((row == firstCoordinate + 1 && column == 1))
     {
         printf("|");
         flag = 1;
     }
-    if((row == firstCoordinate + 2 && column == leftOrRight))
+    if((row == firstCoordinate + 2 && column == 1))
     {
         printf("|");
         flag = 1;
     }
     
+    
+    /////////
+    ///
+    ///
+    ///
+     if((row == y2 && column == 77))
+    {
+        printf("|");
+        flag = 1;
+    }
+    if((row == y2 + 1 && column == 77))
+    {
+        printf("|");
+        flag = 1;
+    }
+    if((row == y2 + 2 && column == 77))
+    {
+        printf("|");
+        flag = 1;
+    }
+    
+    ///
+    ///
+    ///
+   
     return flag;
 }
 
-int ballDraw(int row, int column)
+int ballDraw(int row, int column, int x, int y)
 {
     int flag = 0;
-    if((row == 10) && (column == 10))
+    if((column == x) && (row == y))
     {
         printf("*");
         flag = 1;
     }
     
     return flag;
-    
 }
