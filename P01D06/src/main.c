@@ -1,7 +1,9 @@
 #include <stdio.h>
 
+
 void gameLogic();
 void gameUpdate();
+
 void horizonDraw();
 void vierticalDraw();
 int ballMoveX(int, int);
@@ -23,13 +25,42 @@ int main() {
 
     int tmp;
     while (flag) {
+        int fScore = 0;
+        int sScore = 0;
+        int winScore = 21;
+      
         ball_x = ballMoveX(ball_velGor, ball_x);
         ball_y = ballMoveY(ball_velVer, ball_y);
         tmp = checkBallRocket(ball_x, ball_y, rocket1_x, rocket1_y, rocket2_x, rocket2_y);
         ball_velVer *= tmp;
         ball_velGor *= tmp;
         gameUpdate();
+
+        logic();
+        update();
+    
+
+        if (ball_x == 79) {
+            if (fScore < winScore) {
+                fScore++;
+            } else {
+                printf("Congratulations! LEFT player WIN!");
+                break;
+            }
+            flag = 0;
+        }
+        if (ball_x == 1) {
+            if (sScore < winScore) {
+                sScore++;
+            } else {
+                printf("Congratulations! RIGHT player WIN!");
+                break;
+            }
+            flag = 0;
+        }
     }
+
+
 }
 
 int ballMoveX(int velG, int x){
@@ -75,3 +106,4 @@ void vierticalDraw() {
         printf("\n");
     }
 }
+
