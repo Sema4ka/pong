@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-void logic();
-void update();
+void gameLogic();
+void gameUpdate();
 void horizonDraw();
 void vierticalDraw();
 
@@ -18,12 +18,14 @@ int main() {
     int rocket1_x = 20;
     int rocket2_x = 60;
     while (flag) {
-        logic();
-        update();
+        gameLogic();
+        gameUpdate();
     }
 }
 
-void update() {
+void gameLogic(){}
+
+void gameUpdate() {
     horizonDraw();
     vierticalDraw();
     horizonDraw();
@@ -45,3 +47,4 @@ void vierticalDraw() {
         printf("%c", viewVer);
         printf("\n");
     }
+}
