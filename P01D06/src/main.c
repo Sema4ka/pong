@@ -25,24 +25,27 @@ int main() {
     int ball_x = 42;
     int ball_y = 10;
 
-    int rocket1_y = 10;
+    int tmp;
+
+    int rocket1_y = 10; //rocket param
     int rocket2_y = 10;
     int rocket1_x = 1;
     int rocket2_x = 77;
   
-    int fScore = 0;
+    int fScore = 0; //score peram
     int sScore = 0;
     int winScore = 21;
     while (flag) {
-        ball_x = ballMoveX(ball_velGor, ball_x);
+        ball_x = ballMoveX(ball_velGor, ball_x); //skorost' mya4a
         ball_y = ballMoveY(ball_velVer, ball_y);
-        tmp = checkBallRocket(ball_x, ball_y, rocket1_x, rocket1_y, rocket2_x, rocket2_y);
+
+        tmp = checkBallRocket(ball_x, ball_y, rocket1_x, rocket1_y, rocket2_x, rocket2_y); //proverka na rocket
         ball_velVer *= tmp;
         ball_velGor *= tmp;
-        gameUpdate();
-        update(ball_x, ball_y, rocket1_y, rocket2_y);
+
+        update(ball_x, ball_y, rocket1_y, rocket2_y); //otrisovka kadra
       
-         if (ball_x == 79) {
+         if (ball_x == 79) { //score logic
         if (fScore < winScore) {
             fScore++;
         } else {
@@ -84,9 +87,9 @@ int checkBallRocket(int x, int y, int r1x, int r1y, int r2x, int r2y){
         return 1;
 }
 
-void update() {
+void update(int ball_x, int ball_y, int rocket_1y, int rocket2_y) {
     horizonDraw();
-    vierticalDraw(ball_x, ball_y, rocket1_y, rocket2_y);
+    vierticalDraw(ball_x, ball_y, rocket_1y, rocket2_y);
     horizonDraw();
 }
 
