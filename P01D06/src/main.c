@@ -1,7 +1,6 @@
-#include <stdio.h>
 #include <ncurses.h>
+#include <stdio.h>
 #include <unistd.h>
-
 
 void update(int, int, int, int, int, int);
 void horizonDraw();
@@ -48,55 +47,61 @@ int main() {
         tmp = checkBallRocket(ball_x, ball_y, rocket1_x, rocket1_y, rocket2_x,
                               rocket2_y);  // proverka na rocket
         ball_velGor *= tmp;
-        
-        if(ball_y == 24 || ball_y == 0)
-            ball_velVer *=-1;
 
-        clear();
+        if (ball_y == 24 || ball_y == 0) ball_velVer *= -1;
+
+        // clear();
         update(ball_x, ball_y, rocket1_y, rocket2_y, fScore, sScore);  // otrisovka kadra
 
         if (ball_x == 79) {  // score logic
+            fScore++;
             if (fScore < winScore) {
-                fScore++;
-                ball_y = 25/2;
-                ball_x = 40;
+                ball_y = rocket1_y;
+                ball_x = rocket1_x + 1;
             } else {
+                clear();  //////
+                refresh();
+
                 printw("Congratulations! LEFT player WIN!");
+                usleep(1000 * 1000);
                 flag = 0;
             }
         }
         if (ball_x == 1) {
+            sScore++;
             if (sScore < winScore) {
-                sScore++;
-                ball_y = 25/2;
-                ball_x = 40;
+                ball_y = rocket2_y;
+                ball_x = rocket2_x - 1;
             } else {
+                clear();  ////
+                refresh();
+
                 printw("Congratulations! RIGHT player WIN!");
+                usleep(1000 * 1000);
                 flag = 0;
             }
         }
-        
-        usleep(100*1000);
+
+        usleep(100 * 1000);
         input = getch();
-        if(input == 'q')
+        if (input == 'q')
             flag = 0;
-        else if(input==' ')
+        else if (input == ' ')
             continue;
-        else if(input=='a' || input=='A'){
-            if(rocket1_y > 0)
-                rocket1_y -= 2;    //Скорость ракетки 
-         }
+        else if (input == 'a' || input == 'A') {
+            if (rocket1_y > 0) rocket1_y -= 2;  //Скорость ракетки
+        }
 
-        else if(input=='z' || input=='Z'){
-            if(rocket1_y < 25 -3)
-            rocket1_y += 2;}      //Скорость ракетки
+        else if (input == 'z' || input == 'Z') {
+            if (rocket1_y < 25 - 3) rocket1_y += 2;
+        }  //Скорость ракетки
 
-        else if(input=='k' || input=='K'){
-            if(rocket2_y >0)
-                rocket2_y -= 2;}    //Скорость ракетки
-        else if(input=='m' || input=='M'){
-            if(rocket2_y < 25-3)
-            rocket2_y += 2;}       //Скорость ракетки
+        else if (input == 'k' || input == 'K') {
+            if (rocket2_y > 0) rocket2_y -= 2;
+        }  //Скорость ракетки
+        else if (input == 'm' || input == 'M') {
+            if (rocket2_y < 25 - 3) rocket2_y += 2;
+        }  //Скорость ракетки
         input = ' ';
     }
     endwin();
@@ -105,8 +110,7 @@ int main() {
 int checkBallRocket(int x, int y, int r1x, int r1y, int r2x, int r2y) {
     int checkR1 = (x == r1x && (y == r1y || y == r1y + 1 || y == r1y + 2));
     int checkR2 = (x == r2x && (y == r2y || y == r2y + 1 || y == r2y + 2));
-    
-    
+
     if (checkR1 == 1 || checkR2 == 1)
         return -1;
 
@@ -115,15 +119,14 @@ int checkBallRocket(int x, int y, int r1x, int r1y, int r2x, int r2y) {
 }
 
 void update(int ball_x, int ball_y, int rocket_1y, int rocket2_y, int fScore, int sScore) {
+    clear();
     horizonDraw();
     vierticalDraw(ball_x, ball_y, rocket_1y, rocket2_y);
     horizonDraw();
     scoreDraw(fScore, sScore);
 }
 
-void scoreDraw(int f, int s){
-    printw("  %-75d %d", f, s);
-}
+void scoreDraw(int f, int s) { printw("  %-75d %d", f, s); }
 
 void horizonDraw() {
     char viewGor = '-';
@@ -141,13 +144,11 @@ void vierticalDraw(int ball_x, int ball_y, int rocket1_y, int rocket2_y) {
     for (int i = 0; i < 25; ++i) {
         printw("%c", viewVer);
         for (int j = 0; j < 80 - 4; ++j) {
-            
             if (ballDraw(i, j, ball_x, ball_y)) continue;
-        
+
             if (!racketDraw(i, j, rocket1_y, rocket2_y)) addch(' ');
 
-            if( centerLieneDraw(i, j)) addch(' ');
-
+            if (centerLieneDraw(i, j)) addch(' ');
         }
         printw("%c", viewVer);
         addch('\n');
@@ -203,19 +204,17 @@ int ballDraw(int row, int column, int x, int y) {
     return flag;
 }
 
-int centerLieneDraw(int row, int column)
-{
+int centerLieneDraw(int row, int column) {
     int flag = 0;
     char viewCenterLine = '|';
-    char viewCenterSpace = ' '; 
-    if(column == 38)
-    {
-        if(row % 2 == 0)
+    char viewCenterSpace = ' ';
+    if (column == 38) {
+        if (row % 2 == 0)
             printw("%c", viewCenterLine);
         else
             printw("%c", viewCenterSpace);
         flag = 1;
     }
-    
+
     return flag;
 }
