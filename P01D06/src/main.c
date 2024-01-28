@@ -8,6 +8,7 @@ void horizonDraw();
 void vierticalDraw(int, int, int, int);
 int racketDraw(int, int, int, int);
 int ballDraw(int, int, int, int);
+int centerLieneDraw(int, int);
 void scoreDraw(int, int);
 
 void gameLogic();
@@ -126,7 +127,7 @@ void scoreDraw(int f, int s){
 
 void horizonDraw() {
     char viewGor = '-';
-    for (int i = 0; i <= 80; ++i) {
+    for (int i = 0; i < 80; ++i) {
         printw("%c", viewGor);
     }
     addch('\n');
@@ -139,10 +140,14 @@ void vierticalDraw(int ball_x, int ball_y, int rocket1_y, int rocket2_y) {
 
     for (int i = 0; i < 25; ++i) {
         printw("%c", viewVer);
-        for (int j = 0; j < 80 - 1; ++j) {
+        for (int j = 0; j < 80 - 4; ++j) {
+            
             if (ballDraw(i, j, ball_x, ball_y)) continue;
-
+        
             if (!racketDraw(i, j, rocket1_y, rocket2_y)) addch(' ');
+
+            if( centerLieneDraw(i, j)) addch(' ');
+
         }
         printw("%c", viewVer);
         addch('\n');
@@ -195,5 +200,22 @@ int ballDraw(int row, int column, int x, int y) {
         flag = 1;
     }
 
+    return flag;
+}
+
+int centerLieneDraw(int row, int column)
+{
+    int flag = 0;
+    char viewCenterLine = '|';
+    char viewCenterSpace = ' '; 
+    if(column == 38)
+    {
+        if(row % 2 == 0)
+            printw("%c", viewCenterLine);
+        else
+            printw("%c", viewCenterSpace);
+        flag = 1;
+    }
+    
     return flag;
 }
