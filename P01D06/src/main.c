@@ -31,7 +31,7 @@ int main() {
     int rocket1_y = 10;  // rocket param
     int rocket2_y = 10;
     int rocket1_x = 5;
-    int rocket2_x = 73;
+    int rocket2_x = 71;
 
     int fScore = 0;  // score peram
     int sScore = 0;
@@ -76,7 +76,7 @@ int main() {
             }
         }
         
-        usleep(50*1000);
+        usleep(100*1000);
         input = getch();
         if(input == 'q')
             flag = 0;
@@ -84,19 +84,19 @@ int main() {
             continue;
         else if(input=='a' || input=='A'){
             if(rocket1_y > 0)
-                rocket1_y--;
-        }
+                rocket1_y -= 2;    //Скорость ракетки 
+         }
 
         else if(input=='z' || input=='Z'){
             if(rocket1_y < 25 -3)
-            rocket1_y++;}
+            rocket1_y += 2;}      //Скорость ракетки
 
         else if(input=='k' || input=='K'){
             if(rocket2_y >0)
-                rocket2_y--;}
+                rocket2_y -= 2;}    //Скорость ракетки
         else if(input=='m' || input=='M'){
             if(rocket2_y < 25-3)
-            rocket2_y++;}
+            rocket2_y += 2;}       //Скорость ракетки
         input = ' ';
     }
     endwin();
@@ -177,15 +177,15 @@ int racketDraw(int row, int column, int y1, int y2) {
         flag = 1;
     }
 
-    if ((row == y2 && column == 73)) {
+    if ((row == y2 && column == 71)) {
         addch('|');
         flag = 1;
     }
-    if ((row == y2 + 1 && column == 73)) {
+    if ((row == y2 + 1 && column == 71)) {
         addch('|');
         flag = 1;
     }
-    if ((row == y2 + 2 && column == 73)) {
+    if ((row == y2 + 2 && column == 71)) {
         addch('|');
         flag = 1;
     }
