@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <ncurses.h>
 #include <unistd.h>
 
@@ -56,7 +55,7 @@ int main() {
         update(ball_x, ball_y, rocket1_y, rocket2_y, fScore, sScore);  // otrisovka kadra
 
         if (ball_x == 79) {  // score logic
-            if (fScore <= winScore) {
+            if (fScore < winScore) {
                 fScore++;
                 ball_y = 25/2;
                 ball_x = 40;
@@ -66,7 +65,7 @@ int main() {
             }
         }
         if (ball_x == 1) {
-            if (sScore <= winScore) {
+            if (sScore < winScore) {
                 sScore++;
                 ball_y = 25/2;
                 ball_x = 40;
@@ -76,7 +75,7 @@ int main() {
             }
         }
         
-        usleep(100*1000);
+        usleep(50*1000);
         input = getch();
         if(input == 'q')
             flag = 0;
